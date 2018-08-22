@@ -1,3 +1,5 @@
+import pickle
+from zlib import compress
 from biothings.utils.dataload import dict_sweep, unlist, value_convert_to_number
 
 
@@ -17,6 +19,7 @@ def load_data(sdf_file, drugbank_col=None, chembl_col=None):
     for compound in comp_list:
         restr_dict = restructure_dict(compound)
         restr_dict["_id"] = find_inchikey(restr_dict,drugbank_col,chembl_col)
+        restr_dict = truncate(restr_dict)
         yield restr_dict
 
 def clean_up(_dict):
@@ -88,3 +91,34 @@ def find_inchikey(doc, drugbank_col, chembl_col):
                     _id = doc['_id']
     return _id
 
+def truncate(d):
+    max_values = 1000
+    
+    def truncate_field(field_name, field):
+        if isinstance(field, list) and len(field) >= max_values:
+            compressed = compress(pickle.dumps(field))
+            res = {
+                '_truncated': {
+                    '_readme': "the following fields are truncated for top ten {}".format(field_name),
+                    'total': len(field),
+                    'kept': len(field[:max_values]),
+                    '_raw': compressed,
+                    field_name: field[:max_values],
+                    }
+                }
+            return res
+        else:
+            return field
+
+    if 'chebi' in d.keys():
+        if 'intez_database_links' in d['chebi'].keys():
+            d['chebi']['intenz_database_links'] = truncate_field('intenz_database_links', d['chebi']['intenz_database_links'])
+        if 'reactome_database_links' in d['chebi'].keys():
+            d['chebi']['reactome_database_links'] = truncate_field('reactome_database_links', d['chebi']['reactome_database_links'])
+        if 'rhea_database_links' in d['chebi'].keys():
+            d['chebi']['rhea_database_links'] = truncate_field('rhea_database_links', d['chebi']['rhea_database_links'])
+        if 'sabio_rk_database_links' in d['chebi'].keys():
+            d['chebi']['sabio_rk_database_links'] = truncate_field('sabio_rk_database_links', d['chebi']['sabio_rk_database_links'])
+        if 'uniprot_database_links' in d['chebi'].keys():
+            d['chebi']['uniprot_database_links'] = truncate_field('uniprot_database_links', d['chebi']['uniprot_database_links'])
+    return d
