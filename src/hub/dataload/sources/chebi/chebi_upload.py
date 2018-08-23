@@ -25,15 +25,8 @@ class ChebiUploader(BaseDrugUploader):
     def load_data(self,data_folder):
         self.logger.info("Load data from '%s'" % data_folder)
         input_file = os.path.join(data_folder,"ChEBI_complete.sdf")
-        # get others source collection for inchi key conversion
-        drugbank_col = get_src_db()["drugbank"]
-        assert drugbank_col.count() > 0, "'drugbank' collection is empty (required for inchikey " + \
-                "conversion). Please run 'drugbank' uploader first"
-        chembl_col = get_src_db()["chembl"]
-        assert chembl_col.count() > 0, "'chembl' collection is empty (required for inchikey " + \
-                "conversion). Please run 'chembl' uploader first"
         assert os.path.exists(input_file), "Can't find input file '%s'" % input_file
-        return load_data(input_file,drugbank_col,chembl_col)
+        return load_data(input_file)
 
     def post_update_data(self, *args, **kwargs):
         for idxname in ["chebi.chebi_id"]:

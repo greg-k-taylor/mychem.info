@@ -53,46 +53,24 @@ def restructure_dict(dictionary):
     return restr_dict
 
 def find_inchikey(doc, drugbank_col, chembl_col):
-    _flag = 0
     _id = doc["_id"] # default if we can't find anything
 
     if 'inchikey' in doc["chebi"]:
         _id = doc["chebi"]['inchikey']
-    elif drugbank_col and chembl_col:
-        if 'drugbank_database_links' in doc["chebi"]:
-            d = drugbank_col.find_one({'_id':doc["chebi"]['drugbank_database_links']})
-            if d != None:
-                try:
-                    _id = d['drugbank']['inchi_key']
-                except KeyError:
-                    # no inchi-key in drugbank
-                    _id = d['_id']
-            else:
-                _flag = 1
-        else:
-            _flag = 1
 
-        if _flag:
-            _flag = 0
-            d = chembl_col.find_one({'chembl.chebi_par_id':doc['_id'][6:]},no_cursor_timeout=True)
-            if d != None:
-                try:
-                    _id = d['chembl']['inchi_key']
-                except:
-                    _id = d['_id']
-            else:
-                d = drugbank_col.find_one({'drugbank.chebi':doc['_id'][6:]})
-                if d != None:
-                    try:
-                        _id = d['chembl']['inchi_key']
-                    except:
-                        _id = d['_id']
-                else:
-                    _id = doc['_id']
     return _id
+
 
 def truncate(d):
     max_values = 1000
+
+    fields = [
+        'intez_database_links',
+        'reactome_database_links',
+        'rhea_database_links',
+        'sabio_rk_database_links',
+        'uniprot_database_links',
+        ]
     
     def truncate_field(field_name, field):
         if isinstance(field, list) and len(field) >= max_values:
@@ -110,15 +88,9 @@ def truncate(d):
         else:
             return field
 
-    if 'chebi' in d.keys():
-        if 'intez_database_links' in d['chebi'].keys():
-            d['chebi']['intenz_database_links'] = truncate_field('intenz_database_links', d['chebi']['intenz_database_links'])
-        if 'reactome_database_links' in d['chebi'].keys():
-            d['chebi']['reactome_database_links'] = truncate_field('reactome_database_links', d['chebi']['reactome_database_links'])
-        if 'rhea_database_links' in d['chebi'].keys():
-            d['chebi']['rhea_database_links'] = truncate_field('rhea_database_links', d['chebi']['rhea_database_links'])
-        if 'sabio_rk_database_links' in d['chebi'].keys():
-            d['chebi']['sabio_rk_database_links'] = truncate_field('sabio_rk_database_links', d['chebi']['sabio_rk_database_links'])
-        if 'uniprot_database_links' in d['chebi'].keys():
-            d['chebi']['uniprot_database_links'] = truncate_field('uniprot_database_links', d['chebi']['uniprot_database_links'])
+    for field in fields:
+        if 'chebi' in d.keys():
+            if field in d['chebi'].keys():
+                d['chebi'][field] = truncate_field(field, d['chebi'][field])
+
     return d
