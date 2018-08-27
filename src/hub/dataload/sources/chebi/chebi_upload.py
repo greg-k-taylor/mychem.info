@@ -7,6 +7,8 @@ from .chebi_parser import load_data
 from hub.dataload.uploader import BaseDrugUploader
 from biothings.utils.mongo import get_src_db
 import biothings.hub.dataload.storage as storage
+from biothings.hub.datatransform import DataTransformMDB
+from hub.dataload.graph_mychem import graph_mychem as G
 
 
 SRC_META = {
@@ -22,6 +24,7 @@ class ChebiUploader(BaseDrugUploader):
     storage_class = storage.IgnoreDuplicatedStorage
     __metadata__ = {"src_meta" : SRC_META}
 
+    @DataTransformMDB(G, ['chebi', ('drugbank', 'chebi.drugbank_database_links')], ['inchikey', 'drugbank'], skip_w_regex="^[A-Z]{14}\-[A-Z]{10}(\-[A-Z])?")
     def load_data(self,data_folder):
         self.logger.info("Load data from '%s'" % data_folder)
         input_file = os.path.join(data_folder,"ChEBI_complete.sdf")
