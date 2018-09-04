@@ -6,6 +6,8 @@ from biothings.utils.mongo import get_src_db
 
 from .pharmgkb_parser import load_data
 from hub.dataload.uploader import BaseDrugUploader
+from biothings.hub.datatransform import DataTransformMDB
+from hub.dataload.graph_mychem import graph_mychem as G
 
 
 SRC_META = {
@@ -21,6 +23,7 @@ class PharmGkbUploader(BaseDrugUploader):
     storage_class = storage.IgnoreDuplicatedStorage
     __metadata__ = {"src_meta" : SRC_META}
 
+    @DataTransformMDB(G, [('inchi', 'pharmgkb.inchi'), ('drugbank', 'pharmgkb.cross_references.drugbank'), ('pubchem', 'pharmgkb.cross_references.pubchem_compound'), ('drugbank', 'pharmgkb.cross_references.drugbank'), ('chebi-short', 'pharmgkb.cross_references.chebi')], ['inchikey'])
     def load_data(self,data_folder):
         self.logger.info("Load data from '%s'" % data_folder)
         input_file = os.path.join(data_folder,"drugs.tsv")

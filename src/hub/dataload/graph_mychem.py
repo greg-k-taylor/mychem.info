@@ -55,7 +55,9 @@ graph_mychem.add_node('chebi')
 graph_mychem.add_node('chebi-short')
 
 graph_mychem.add_edge('chebi', 'chebi-short',
-                      object=RegExEdge('CHEBI:', ''))
+                      object=RegExEdge('^CHEBI:', ''))
+graph_mychem.add_edge('chebi-short', 'chebi',
+                      object=RegExEdge('^', 'CHEBI:'))
 graph_mychem.add_edge('chebi-short', 'drugbank',
                       object=MongoDBEdge('drugbank', 'drugbank.chebi', 'drugbank.drugbank_id'))
 graph_mychem.add_edge('chebi-short', 'chembl',
