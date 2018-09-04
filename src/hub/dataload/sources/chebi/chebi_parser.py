@@ -65,8 +65,8 @@ def truncate(d):
     max_values = 1000
 
     fields = [
-        'intez_database_links',
-        'reactome_database_links',
+        'intenz_database_links',
+        # 'reactome_database_links',
         'rhea_database_links',
         'sabio_rk_database_links',
         'uniprot_database_links',
