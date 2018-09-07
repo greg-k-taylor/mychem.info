@@ -23,7 +23,7 @@ class PharmGkbUploader(BaseDrugUploader):
     storage_class = storage.IgnoreDuplicatedStorage
     __metadata__ = {"src_meta" : SRC_META}
 
-    @DataTransformMDB(G, [('inchi', 'pharmgkb.inchi'), ('drugbank', 'pharmgkb.cross_references.drugbank'), ('pubchem', 'pharmgkb.cross_references.pubchem_compound'), ('drugbank', 'pharmgkb.cross_references.drugbank'), ('chebi-short', 'pharmgkb.cross_references.chebi')], ['inchikey'])
+    @DataTransformMDB(G, [('inchi', 'pharmgkb.inchi'), ('pubchem', 'pharmgkb.cross_references.pubchem_compound'), ('drugbank', 'pharmgkb.cross_references.drugbank'), ('chebi-short', 'pharmgkb.cross_references.chebi')], ['inchikey', 'unii', 'rxnorm', 'drugbank', 'chebi', 'chembl', 'pubchem', 'drugname'] )
     def load_data(self,data_folder):
         self.logger.info("Load data from '%s'" % data_folder)
         input_file = os.path.join(data_folder,"drugs.tsv")

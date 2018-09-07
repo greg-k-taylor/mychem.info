@@ -9,7 +9,10 @@ graph_mychem = nx.DiGraph()
 graph_mychem.add_node('inchi')
 graph_mychem.add_node('chembl')
 graph_mychem.add_node('drugbank')
+graph_mychem.add_node('drugname')
 graph_mychem.add_node('pubchem')
+graph_mychem.add_node('rxnorm')
+graph_mychem.add_node('unii')
 graph_mychem.add_node('inchikey')
 
 graph_mychem.add_edge('inchi', 'drugbank',

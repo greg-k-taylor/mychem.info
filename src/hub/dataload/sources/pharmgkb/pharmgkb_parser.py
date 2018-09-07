@@ -14,6 +14,7 @@ def load_data(tsv_file, drugbank_col=None, pubchem_col=None, chembl_col=None, ch
         _d = restr_dict(row)
         _d = clean_up(_d)
         _d = unlist(dict_sweep(_d))
+        _d = prefix_chebi(_d)
         _dict = {'_id':_id,'pharmgkb':_d}
         yield _dict
 
@@ -46,3 +47,9 @@ def clean_up(d):
                 _d.update({k:v})
             d.update({key:_d})
     return d
+
+def prefix_chebi(_d):
+    if 'cross_references' in _d.keys():
+        if 'chebi' in _d['cross_references'].keys():
+            _d['cross_references']['chebi'] = 'CHEBI:' + _d['cross_references']['chebi']
+    return _d
