@@ -15,7 +15,8 @@ def percent_float(gen):
     try:
         return float(s)
     except ValueError:
-        return -1
+        # default value sends an item to the top of the list
+        return 101
 
 def load_data(_file, pubchem_col=None):
     _dict = {}
