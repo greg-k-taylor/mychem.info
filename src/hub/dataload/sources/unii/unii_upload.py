@@ -29,67 +29,68 @@ class UniiUploader(BaseDrugUploader):
     @classmethod
     def get_mapping(klass):
         mapping = {
-            "unii": {
-                "properties": {
-                    "unii": {
-                        "type": "string",
-                        "analyzer": "string_lowercase"
-                    },
-                    "preferred_term": {
-                        "type": "string",
-                    },
-                    "registry_number": {
-                        "type": "string",
-                        "analyzer": "string_lowercase"
-                    },
-                    "ec": {
-                        "type": "string",
-                        "analyzer": "string_lowercase"
-                    },
-                    "ncit": {
-                        "type": "string",
-                        "analyzer": "string_lowercase"
-                    },
-                    "rxcui": {
-                        "type": "string",
-                        "analyzer": "string_lowercase"
-                    },
-                    "itis": {
-                        "type": "string",
-                        "analyzer": "string_lowercase"
-                    },
-                    "ncbi": {
-                        "type": "string",
-                        "analyzer": "string_lowercase"
-                    },
-                    "plants": {
-                        "type": "string",
-                        "analyzer": "string_lowercase"
-                    },
-                    "grin": {
-                        "type": "string",
-                        "analyzer": "string_lowercase"
-                    },
-                    "inn_id": {
-                        "type": "string",
-                        "analyzer": "string_lowercase"
-                    },
-                    "molecular_formula": {
-                        "type": "string",
-                        "analyzer": "string_lowercase"
-                    },
-                    "inchikey": {
-                        "type": "string",
-                        "analyzer": "string_lowercase"
-                    },
-                    "smiles": {
-                        "type": "string",
-                        "analyzer": "string_lowercase"
-                    },
-                    "unii_type": {
-                        "type": "string"
-                    },
-                }
+                "unii": {
+                    "properties": {
+                        "unii": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
+                            'copy_to': ['all'],
+                            },
+                        "preferred_term": {
+                            "type": "text",
+                            },
+                        "registry_number": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
+                            },
+                        "ec": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
+                            },
+                        "ncit": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
+                            },
+                        "rxcui": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
+                            },
+                        "itis": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
+                            },
+                        "ncbi": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
+                            },
+                        "plants": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
+                            },
+                        "grin": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
+                            },
+                        "inn_id": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
+                            },
+                        "molecular_formula": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
+                            },
+                        "inchikey": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
+                            },
+                        "smiles": {
+                                "normalizer": "keyword_lowercase_normalizer",
+                                "type": "keyword",
+                                },
+                        "unii_type": {
+                                "type": "text"
+                                },
+                        }
             }
         }
 

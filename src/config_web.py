@@ -15,9 +15,9 @@ ES_INDEX = 'mydrugs_current'
 # elasticsearch document type
 ES_DOC_TYPE = 'drug'
 # make these smaller for c.biothings
-ES_SIZE_CAP = 10
+#ES_SIZE_CAP = 10
 # scrolls are smaller
-ES_SCROLL_SIZE = 10
+#ES_SCROLL_SIZE = 10
 
 API_VERSION = 'v1'
 
@@ -64,15 +64,15 @@ GA_ACTION_ANNOTATION_GET = 'drug_get'
 GA_ACTION_ANNOTATION_POST = 'drug_post'
 GA_TRACKER_URL = 'c.biothings.io'
 
-ANNOTATION_ID_REGEX_LIST = [(re.compile(r'db[0-9]+', re.I), ['drugbank.drugbank_id','drugbank.accession_number']),
+ANNOTATION_ID_REGEX_LIST = [(re.compile(r'db[0-9]+', re.I), 'drugbank.drugbank_id'),
                             (re.compile(r'chembl[0-9]+', re.I), 'chembl.molecule_chembl_id'),
-                            (re.compile(r'chebi\:[0-9]+', re.I), 'chebi.chebi_id'),
+                            (re.compile(r'chebi\:[0-9]+', re.I), ['chebi.id', 'chebi.secondary_chebi_id']),
                             (re.compile(r'cid[0-9]+', re.I), 'pubchem.cid'),
                             (re.compile(r'[A-Z0-9]{10}'), 'unii.unii')]
 # make max sizes smaller
-QUERY_GET_ES_KWARGS['size']['default'] = 10
-ANNOTATION_POST_CONTROL_KWARGS['ids']['max'] = 10
-QUERY_POST_CONTROL_KWARGS['q']['max'] = 10
+#QUERY_GET_ES_KWARGS['size']['default'] = 10
+#ANNOTATION_POST_CONTROL_KWARGS['ids']['max'] = 10
+#QUERY_POST_CONTROL_KWARGS['q']['max'] = 10
 
 STATUS_CHECK = {
     'id': 'USNINKBPBVKHHZ-CYUUQNCZSA-L', #penicillin

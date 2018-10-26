@@ -16,86 +16,86 @@ class GinasUploader(uploader.DummySourceUploader):
                 "ginas": {
                     "properties": {
                         "cas_primary": {
-                            "type": "string",
-                            "analyzer": "string_lowercase"
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
                             },
                         "relationships": {
                             "properties": {
                                 "type": {
-                                    "analyzer": "string_lowercase",
-                                    "type": "string"
+                                    "normalizer": "keyword_lowercase_normalizer",
+                                    "type": "keyword",
                                     }
                                 }
                             },
                         "unii": {
-                            "type": "string",
-                            "analyzer": "string_lowercase"
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
                             },
                         "approvalID": {
-                            "type": "string",
-                            "analyzer": "string_lowercase"
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
                             },
                         "definitionLevel": {
-                            "type": "string",
+                            "type": "text",
                             },
                         "inchikey": {
-                            "type": "string",
-                            "analyzer": "string_lowercase"
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
                             },
                         "mixture_unii": {
-                            "type": "string",
-                            "analyzer": "string_lowercase"
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
                             },
                         "mixture_inchikey": {
-                            "type": "string",
-                            "analyzer": "string_lowercase"
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
                             },
                         "names_list": {
-                            "type": "string"
+                            "type": "text"
                             },
                         "preferred_name": {
-                            "type": "string"
+                            "type": "text"
                             },
                         "properties": {
-                            "type": "string",
+                            "type": "text",
                             },
                         "status": {
-                            "type": "string"
+                            "type": "text"
                             },
                         "substanceClass": {
-                            "type": "string"
+                            "type": "text"
                             },
                         "tags": {
-                            "type": "string",
-                            },
+                                "type": "text",
+                                },
                         "uuid": {
-                            "type": "string",
-                            "analyzer": "string_lowercase"
-                            },
+                                "normalizer": "keyword_lowercase_normalizer",
+                                "type": "keyword",
+                                },
                         "xrefs": {
                                 "properties": {
                                     "CAS": {
-                                        "type": "string",
-                                        "analyzer": "string_lowercase"
+                                        "normalizer": "keyword_lowercase_normalizer",
+                                        "type": "keyword",
                                         },
                                     "DRUG BANK": {
-                                        "type": "string",
-                                        "analyzer": "string_lowercase"
+                                        "normalizer": "keyword_lowercase_normalizer",
+                                        "type": "keyword",
                                         },
                                     "MESH": {
-                                        "type": "string",
-                                        "analyzer": "string_lowercase"
+                                        "normalizer": "keyword_lowercase_normalizer",
+                                        "type": "keyword",
                                         },
                                     "NCI_THESAURUS": {
-                                        "type": "string",
-                                        "analyzer": "string_lowercase"
+                                        "normalizer": "keyword_lowercase_normalizer",
+                                        "type": "keyword",
                                         },
                                     "RXCUI": {
-                                        "type": "string",
-                                        "analyzer": "string_lowercase"
+                                        "normalizer": "keyword_lowercase_normalizer",
+                                        "type": "keyword",
                                         },
                                     "WIKIPEDIA": {
-                                        "type": "string",
+                                        "type": "text",
                                         }
                                     }
                                 },

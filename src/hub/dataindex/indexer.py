@@ -7,14 +7,6 @@ import biothings.hub.dataindex.indexer as indexer
 
 class DrugIndexer(indexer.Indexer):
 
-    def get_mapping(self, enable_timestamp=True):
-        mapping = super(DrugIndexer,self).get_mapping(enable_timestamp=enable_timestamp)
-        # TODO: enrich with myvariant specific stuff
-        return mapping
-
-    def get_index_creation_settings(self):
-        return {"codec" : "best_compression"}
-
     @asyncio.coroutine
     def index(self, target_name, index_name, job_manager, steps=["index","post"],
               batch_size=10000, ids=None, mode="index"):
@@ -26,4 +18,4 @@ class DrugIndexer(indexer.Indexer):
                 steps=steps,
                 batch_size=2500,
                 ids=ids,
-                mode="index")
+                mode=mode)

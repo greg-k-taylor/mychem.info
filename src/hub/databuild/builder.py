@@ -1,14 +1,12 @@
-import math
-import asyncio
-from functools import partial
-import datetime, pickle
-
-from biothings.utils.common import iter_n
-from biothings.utils.mongo import id_feeder
 import biothings.utils.mongo as mongo
 import biothings.hub.databuild.builder as builder
-import config
 
 class MyChemDataBuilder(builder.DataBuilder):
-    pass
+
+    def get_stats(self,sources,job_manager):
+        self.stats = super(MyChemDataBuilder,self).get_stats(sources,job_manager)
+        tgt = mongo.get_target_db()[self.target_name]
+        self.stats["total"] = tgt.count()
+        return self.stats
+
 

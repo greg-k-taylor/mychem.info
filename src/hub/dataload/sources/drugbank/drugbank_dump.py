@@ -32,7 +32,7 @@ class DrugBankDumper(HTTPDumper):
         table = table.pop()
         # the very first element in the table contains the latest version
         version = table.find("tbody").find("tr").find("td").text
-        if force or not self.src_doc or (self.src_doc and self.src_doc.get("release") < version):
+        if force or not self.src_doc or (self.src_doc and self.src_doc.get("download",{}).get("release") < version):
             self.release = version # new_data_folder can be generated
             self.logger.info("DrugBank, new release '%s' available, please download it from " % version + \
                     "https://www.drugbank.ca/releases and put the file in folder '%s'. " % self.new_data_folder + \

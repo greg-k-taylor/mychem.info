@@ -3,11 +3,13 @@
 #############
 import os
 
-DATA_HUB_DB_DATABASE = "drug_hubdb"               # db containing the following (internal use)
+DATA_HUB_DB_DATABASE = "drug_hubdb"                   # db containing the following (internal use)
 DATA_SRC_MASTER_COLLECTION = 'src_master'             # for metadata of each src collections
 DATA_SRC_DUMP_COLLECTION = 'src_dump'                 # for src data download information
 DATA_SRC_BUILD_COLLECTION = 'src_build'               # for src data build information
 DATA_SRC_BUILD_CONFIG_COLLECTION = 'src_build_config' # for src data build configuration
+DATA_PLUGIN_COLLECTION = 'data_plugin'                # for data plugins information
+API_COLLECTION = 'api'                                # for api information (running under hub control)
 EVENT_COLLECTION = "event"
 CMD_COLLECTION = "cmd"
 
@@ -87,6 +89,8 @@ HIPCHAT_CONFIG = {
         #    'host' : 'xxxx.hipchat.com',
         #    'usertoken' : 'abcdefghijkl'
         }    
+
+SLACK_WEBHOOK = None
 
 # SSH port for hub console
 HUB_SSH_PORT = 8022
@@ -196,6 +200,8 @@ DATA_ARCHIVE_ROOT = ConfigurationError("Define path to folder which will contain
 LOG_FOLDER = ConfigurationError("Define path to folder which will contain log files")
 # Usually inside DATA_ARCHIVE_ROOT
 #LOG_FOLDER = os.path.join(DATA_ARCHIVE_ROOT,'logs')
+
+STANDALONE_VERSION = ConfigurationError("Define standalone version targetted by this Hub") 
 
 # Path to folder containing diff files
 DIFF_PATH = ConfigurationError("Define path to folder which will contain output files from diff")                                                                                                                                       

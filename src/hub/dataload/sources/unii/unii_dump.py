@@ -31,7 +31,7 @@ class UniiDumper(HTTPDumper):
 
     def create_todump_list(self,force=False,**kwargs):
         self.release = self.get_latest_release()
-        if force or not self.src_doc or (self.src_doc and self.src_doc.get("release") < self.release):
+        if force or not self.src_doc or (self.src_doc and self.src_doc.get("download",{}).get("release") < self.release):
             # if new release, that link points to that latest release
             local = os.path.join(self.new_data_folder,os.path.basename(self.DATA_URL))
             self.to_dump.append({"remote":self.DATA_URL, "local":local})

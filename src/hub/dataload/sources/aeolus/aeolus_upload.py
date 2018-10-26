@@ -15,95 +15,94 @@ class AeolusUploader(uploader.DummySourceUploader):
     @classmethod
     def get_mapping(klass):
         mapping = {
-            "aeolus": {
-                "properties": {
-                    "drug_id": {
-                        "type": "string",
-                        "analyzer": "string_lowercase"
-                    },
-                    "drug_name": {
-                        "type": "string",
-                    },
-                    "inchikey": {
-                        "type": "string",
-                        "analyzer": "string_lowercase"
-                    },
-                    "no_of_outcomes": {
-                        "type": "integer",
-                    },
-                    "pt": {
-                        "type": "string",
-                    },
-                    "unii": {
-                        "type": "string",
-                        "analyzer": "string_lowercase"
-                    },
-					"drug_vocab": {
-						"type": "string"
-					},
-                    "drug_code": {
-                        "analyzer": "string_lowercase",
-                        "type": "string"
-                    },
-					"rxcui": {
-						"analyzer": "string_lowercase",
-						"type": "string"
-					},
-					"relationships": {
-						"properties": {
-							"relatedSubstance": {
-								"properties": {
-									"approvalID": {
-										"analyzer": "string_lowercase",
-										"type": "string"
-										},
-									"refPname": {
-										"analyzer": "string_lowercase",
-										"type": "string"
-										}
-									}
-								},
-							"type": {
-								"analyzer": "string_lowercase",
-								"type": "string"
-								}
-							}
-						},
-                    "outcomes": {
-                        "properties": {
-							"code": {
-								"analyzer": "string_lowercase",
-								"type": "string"
-								},
-							"vocab": {
-								"include_in_all": False,
-								"type": "string"
-								},
-                            "case_count": {
-                                "type": "long",
+                "aeolus": {
+                    "properties": {
+                        "drug_id": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
                             },
-                            "id": {
-                                "type": "string",
-                                "analyzer": "string_lowercase"
+                        "drug_name": {
+                            "type": "text",
                             },
-                            "name": {
-                                "type": "string",
+                        "inchikey": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
                             },
-                            "prr": {
-                                "type": "float",
+                        "no_of_outcomes": {
+                            "type": "integer",
                             },
-                            "prr_95_ci": {
-                                "type": "float",
+                        "pt": {
+                            "type": "text",
                             },
-                            "ror": {
-                                "type": "float",
+                        "unii": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
                             },
-                            "ror_95_ci": {
-                                "type": "float",
+                        "drug_vocab": {
+                            "type": "text"
                             },
-                        },
-                    }
-                }
+                        "drug_code": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
+                            },
+                        "rxcui": {
+                            "normalizer": "keyword_lowercase_normalizer",
+                            "type": "keyword",
+                            },
+                        "relationships": {
+                            "properties": {
+                                "relatedSubstance": {
+                                    "properties": {
+                                        "approvalID": {
+                                            "normalizer": "keyword_lowercase_normalizer",
+                                            "type": "keyword",
+                                            },
+                                        "refPname": {
+                                            "normalizer": "keyword_lowercase_normalizer",
+                                            "type": "keyword",
+                                            }
+                                        }
+                                    },
+                                "type": {
+                                    "normalizer": "keyword_lowercase_normalizer",
+                                    "type": "keyword",
+                                    }
+                                }
+                            },
+                        "outcomes": {
+                                "properties": {
+                                    "code": {
+                                        "normalizer": "keyword_lowercase_normalizer",
+                                        "type": "keyword",
+                                        },
+                                    "vocab": {
+                                        "type": "text"
+                                        },
+                                    "case_count": {
+                                        "type": "long",
+                                        },
+                                    "id": {
+                                        "normalizer": "keyword_lowercase_normalizer",
+                                        "type": "keyword",
+                                        },
+                                    "name": {
+                                        "type": "text",
+                                        },
+                                    "prr": {
+                                        "type": "float",
+                                        },
+                                    "prr_95_ci": {
+                                        "type": "float",
+                                        },
+                                    "ror": {
+                                        "type": "float",
+                                        },
+                                    "ror_95_ci": {
+                                        "type": "float",
+                                        },
+                                    },
+                                }
+                        }
             }
         }
 
