@@ -2,6 +2,20 @@ import pandas as pd
 import csv
 
 from biothings.utils.dataload import dict_sweep, value_convert_to_number
+from dotstring import key_value
+
+
+def percent_float(gen):
+    """helper function - sort by 'sider.side_effect.frequency' """
+    # take the first element from the generator
+    s = next(gen)
+    # drop the %
+    s = s.replace("%", "")
+    # convert to a float (return -1 if unsuccessful)
+    try:
+        return float(s)
+    except ValueError:
+        return -1
 
 def load_data(_file, pubchem_col=None):
     _dict = {}
@@ -25,6 +39,12 @@ def load_data(_file, pubchem_col=None):
             _d = restr_dict(_dict,row)
             _dict['sider'].append(_d)
     _dict["_id"] = find_inchi_key(_dict, pubchem_col)
+
+    # sort the 'sider' list by "sider.side_effect.frequency"
+    _dict['sider'] = sorted(_dict['sider'],
+                            key=lambda x: percent_float(key_value(x, "side_effect.frequency")),
+                            reverse=True)
+
     yield _dict
 
 def restr_dict(_dict,row):
