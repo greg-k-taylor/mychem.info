@@ -8,15 +8,29 @@ from dotstring import key_value
 def percent_float(gen):
     """helper function - sort by 'sider.side_effect.frequency' """
     # take the first element from the generator
+    default_value = 101
+
     s = next(gen)
     # drop the %
     s = s.replace("%", "")
-    # convert to a float (return -1 if unsuccessful)
-    try:
-        return float(s)
-    except ValueError:
-        # default value sends an item to the top of the list
-        return 101
+    if '-' in s:
+        bounds = s.split("-")
+        if len(bounds) != 2:
+            return default_value
+        try:
+            lower = float(bounds[0])
+            upper = float(bounds[1])
+        except ValueError:
+            return default_value
+        avg = (upper + lower) / 2
+        return avg
+    else:
+        # convert to a float (return -1 if unsuccessful)
+        try:
+            return float(s)
+        except ValueError:
+            # default value sends an item to the top of the list
+            return default_value
 
 def load_data(_file, pubchem_col=None):
     _dict = {}
