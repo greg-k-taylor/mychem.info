@@ -4,9 +4,11 @@ import zipfile
 import pymongo
 
 from .sider_parser import load_data
+from .sider_parser import percent_float
 from hub.dataload.uploader import BaseDrugUploader
 import biothings.hub.dataload.storage as storage
 from biothings.utils.mongo import get_src_db
+from dotstring import key_value
 
 
 SRC_META = {
@@ -29,7 +31,13 @@ class SiderUploader(BaseDrugUploader):
         pubchem_col = get_src_db()["pubchem"]
         assert pubchem_col.count() > 0, "'pubchem' collection is empty (required for inchikey " + \
                 "conversion). Please run 'pubchem' uploader first"
-        return load_data(input_file, pubchem_col)
+        docs = load_data(input_file, pubchem_col)
+        for doc in docs:
+            # sort the 'sider' list by "sider.side_effect.frequency"
+            doc['sider'] = sorted(doc['sider'],
+                                  key=lambda x: percent_float(key_value(x, "side_effect.frequency")),
+                                  reverse=True)
+            yield doc
 
     def post_update_data(self, *args, **kwargs):
         # hashed because inchi is too long (and we'll do == ops to hashed are enough)
