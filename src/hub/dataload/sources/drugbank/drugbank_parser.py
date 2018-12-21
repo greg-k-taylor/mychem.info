@@ -421,7 +421,18 @@ def restructure_dict(dictionary):
                         mixture['ingredients'] = ingredient_lst
                         mixture_lst.append(mixture)
             if mixture_lst:
-                d1.update({key:mixture_lst})
+                ### remove duplicates from the mixture_lst
+                # convert 'ingredients' to tuples
+                for m in mixture_lst:
+                    m['ingredients'] = tuple(m['ingredients'])
+                # remove duplicates by converting each dict to key-value tuple
+                unique_mix_lst = [dict(t) for t in {tuple(d.items()) for d in mixture_lst}]
+                # convert 'ingredients' back to list
+                for m in unique_mix_lst:
+                    m['ingredients'] = list(m['ingredients'])
+
+                # save results
+                d1.update({key:unique_mix_lst})
 
         elif key == 'pathways' and value:
             _li = []
